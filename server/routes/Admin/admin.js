@@ -9,12 +9,9 @@ const { protect } = require('../../middleware/jwtauth');
 router.post("/login",adminlogin.adminloginpost)
 
 //home
-// router.get("/",adminlogin.adminHome)
-
 router.route("/").get(protect,adminlogin.adminHome)
 
 //user status change 
-// router.get("/block",adminlogin.adminBlock)
 router.route("/block").get(protect,adminlogin.adminBlock)
 
 //search 

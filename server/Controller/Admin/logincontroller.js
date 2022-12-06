@@ -1,5 +1,5 @@
 const adminSchema = require("../../models/adminSchema");
-const userSchema = require('../../models/userSchema')
+const userSchema = require("../../models/userSchema");
 const bcrypt = require("bcrypt");
 const generateToken = require("../../utils/generatetoken");
 
@@ -25,25 +25,27 @@ exports.adminloginpost = async (req, res) => {
   });
 };
 
+exports.adminHome = async (req, res) => {
+  console.log("HEHEH");
+  userSchema.find().then((data) => {
+    res.status(200).json(data);
+  });
+};
 
-exports.adminHome = async(req,res)=>[
-    userSchema.find().then((data)=>{
-        res.status(200).json(data)
-    })
-]
+exports.adminBlock = async (req, res) => {
+  userSchema.findOne({ _id: req.query.id }).then((result) => {
+    userSchema.updateOne(
+      { _id: req.query.id },
+      { $set: { status: !result.status } },
+      function (err, respo) {
+        if (err) {
+          console.log(err);
+        }
+      }
+    );
+  });
 
-
-exports.adminBlock = async(req,res)=>{
-    userSchema.findOne({_id:req.query.id}).then((result)=>{
-        userSchema.updateOne({_id:req.query.id},{$set:{status:!result.status}},function(err,respo){
-            if(err){
-                console.log(err);
-            }
-        })
-    })
-
-    userSchema.find().then((data)=>{
-        res.status(200).json(data)
-    })
-   
-}
+  userSchema.find().then((data) => {
+    res.status(200).json(data);
+  });
+};

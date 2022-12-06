@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt")
 const generateToken = require("../../utils/generatetoken")
 
 exports.SignUpPost = async(req,res)=>{
+    console.log(req.body.email);
     try {
         
         let details = {
